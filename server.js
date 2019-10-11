@@ -10,65 +10,16 @@ const upload = require('./upload');
 
 const app = express();
 
-// hard coded configuration object
-conf = {
-    // look for PORT environment variable,
-    // else look for CLI argument,
-    // else use hard coded value for port 5000
-    port: process.env.PORT || process.argv[2] || 5000,
- 
-    // origin undefined handler
-    // see https://github.com/expressjs/cors/issues/71
-    originUndefined: function (req, res, next) {
- 
-        if (!req.headers.origin) {
- 
-            res.json({
- 
-                mess: 'Hi you are visiting the service locally. If this was a CORS the origin header should not be undefined'
- 
-            });
- 
-        } else {
- 
-            next();
- 
-        }
- 
-    },
- 
-    // Cross Origin Resource Sharing Options
-    cors: {
- 
-        // origin handler
-        origin: function (origin, cb) {
- 
-            // setup a white list
-            let wl1 = ['https://roopabdr.github.io'];
-            let wl2 = ['http://localhost:3000'];
-
-            if (wl1.indexOf(origin) != -1 || wl2.indexOf(origin) != -1) {
- 
-                cb(null, true);
- 
-            } else {
- 
-                cb(new Error('invalid origin: ' + origin), false);
- 
-            }
- 
-        },
- 
-        optionsSuccessStatus: 200
- 
+let whitelist = ['https://roopabdr.github.io', 'http://localhost:3000']
+let corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
     }
- 
-};
-
-app.use(bodyParser.json());
-// app.use(cors());
-// use origin undefined handler, then cors for all paths
-app.use(conf.originUndefined, cors(conf.cors));
+  }
+}
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
@@ -76,6 +27,11 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     next();
 });
+
+app.use(bodyParser.json());
+// app.use(cors());
+// use origin undefined handler, then cors for all paths
+app.use(conf.originUndefined, cors(conf.cors));
 
 
 const workbook = XLSX.readFile('Book1.xlsx');
@@ -103,7 +59,7 @@ wb.Sheets['TimeSheet'] = ws;
 // FileSaver.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
 
 // res.send('It is working');
-app.get('/', (req, res) => {
+app.get('/', cors(corsOptions), (req, res) => {
     // res.json(book1_content);
     // res.setHeader('Content-Type', 'application/octet-stream');
     // res.setHeader('Content-Disposition', 'attachment; filename='+ 'test.xlx');
@@ -114,7 +70,7 @@ app.get('/', (req, res) => {
     res.send('Hello');
 });
 
-app.post('/upload', upload);
+app.post('/upload', cors(corsOptions), upload);
 
 // app.post('/uploading', function(req, res){
 //     console.log('testing here');
