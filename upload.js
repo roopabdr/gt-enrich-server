@@ -17,7 +17,7 @@ module.exports = function upload(req, res) {
     csv()
     .fromString(fileData)
     .then((json)=>{
-        console.log('json inside',json);
+        // console.log('json inside',JSON.stringify(json));
         res.status(200).send("All OK");
         // .json(JSON.stringify(json[15]['Timekeeper Name']));
     });
