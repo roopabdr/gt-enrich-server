@@ -29,9 +29,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(bodyParser.json());
-// app.use(cors());
-// use origin undefined handler, then cors for all paths
-app.use(conf.originUndefined, cors(conf.cors));
+app.use(cors());
 
 
 const workbook = XLSX.readFile('Book1.xlsx');
