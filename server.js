@@ -10,7 +10,7 @@ const upload = require('./upload');
 
 const app = express();
 
-let whitelist = ['https://roopabdr.github.io', 'http://localhost:3000']
+let whitelist = ['https://roopabdr.github.io', 'http://localhost:3000','https://gt-enrich-server.herokuapp.com','https://gt-enrich.herokuapp.com']
 let corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
