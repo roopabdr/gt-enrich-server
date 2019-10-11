@@ -44,9 +44,10 @@ conf = {
         origin: function (origin, cb) {
  
             // setup a white list
-            let wl = ['https://roopabdr.github.io/gt-enrich/'];
- 
-            if (wl.indexOf(origin) != -1) {
+            let wl1 = ['https://roopabdr.github.io'];
+            let wl2 = ['http://localhost:3000'];
+
+            if (wl1.indexOf(origin) != -1 || wl2.indexOf(origin) != -1) {
  
                 cb(null, true);
  
