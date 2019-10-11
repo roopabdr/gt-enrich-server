@@ -13,13 +13,16 @@ module.exports = function upload(req, res) {
     //     return (t % 3 === 0) ? "\n" : match;
     //   });
     // fileData = 'a,b,c\n1,2,3\n4,5,6';
-    console.log(fileData);
+    // console.log(fileData);
     csv()
     .fromString(fileData)
     .then((json)=>{
-        // console.log('json inside',JSON.stringify(json));
-        res.status(200).send("All OK");
-        // .json(JSON.stringify(json[15]['Timekeeper Name']));
+        console.log('json inside',json[0]);
+        // res.send("All OK");
+        res.json(json[0]);
+    })
+    .catch(err => {
+        res.status(400).json("God knows what this error is: "+err);
     });
     // res.send('Stringified', JSON.stringify(jsonData[0]));
     // console.log(jsonData[0]);

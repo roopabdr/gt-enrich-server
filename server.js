@@ -10,17 +10,6 @@ const upload = require('./upload');
 
 const app = express();
 
-let whitelist = ['https://roopabdr.github.io', 'http://localhost:3000','https://gt-enrich-server.herokuapp.com','https://gt-enrich.herokuapp.com']
-let corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
@@ -57,7 +46,8 @@ wb.Sheets['TimeSheet'] = ws;
 // FileSaver.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
 
 // res.send('It is working');
-app.get('/', cors(corsOptions), (req, res) => {
+//cors(corsOptions), 
+app.get('/', (req, res) => {
     // res.json(book1_content);
     // res.setHeader('Content-Type', 'application/octet-stream');
     // res.setHeader('Content-Disposition', 'attachment; filename='+ 'test.xlx');
@@ -68,7 +58,7 @@ app.get('/', cors(corsOptions), (req, res) => {
     res.send('Hello');
 });
 
-app.post('/upload', cors(corsOptions), upload);
+app.post('/upload', upload);
 
 // app.post('/uploading', function(req, res){
 //     console.log('testing here');
