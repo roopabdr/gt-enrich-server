@@ -70,6 +70,13 @@ app.use(bodyParser.json());
 // use origin undefined handler, then cors for all paths
 app.use(conf.originUndefined, cors(conf.cors));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    next();
+});
+
 
 const workbook = XLSX.readFile('Book1.xlsx');
 const sheet_name_list = workbook.SheetNames;
