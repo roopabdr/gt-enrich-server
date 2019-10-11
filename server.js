@@ -47,6 +47,7 @@ app.get('/', (req, res) => {
     // return wbout;
     // XLSX.writeFile(wb, 'Book3.xlsx');
     // res.send(book1_content);
+    res.send('Hello');
 });
 
 app.post('/upload', upload);
