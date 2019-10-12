@@ -10,14 +10,15 @@ const upload = require('./upload');
 
 const app = express();
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     next();
 });
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '500mb' }));
 app.use(cors());
 
 
@@ -55,17 +56,11 @@ app.get('/', (req, res) => {
     // return wbout;
     // XLSX.writeFile(wb, 'Book3.xlsx');
     // res.send(book1_content);
-    res.send('Hello');
+    res.send('Hello, World!');
 });
 
 app.post('/upload', upload);
 
-// app.post('/uploading', function(req, res){
-//     console.log('testing here');
-//     console.dir(req.body.csvdata);
-//     res.send("test");
-// });
-
 app.listen(process.env.PORT || 5000, () => {
-	console.log(`app is running on port 5000`);
+    console.log(`app is running on port 5000`);
 });

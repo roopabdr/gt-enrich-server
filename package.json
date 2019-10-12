@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "formidable": "^1.2.1",
+    "lodash": "^4.17.15",
     "request": "^2.88.0",
     "xlsx": "^0.15.1"
   },
