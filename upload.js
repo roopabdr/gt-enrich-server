@@ -1,6 +1,6 @@
 const csv = require("csvtojson");
 const lodash = require("lodash");
-// const csvtojsonV2=require("csvtojson/v2");
+const fs = require("fs");
 
 module.exports = function upload(req, res) {
     let fileData = String(req.body.csvdata);
@@ -46,5 +46,24 @@ function getBurnDownData(jsonData) {
     // console.log(burndown);
     let sum = sumVal(burndown);
     console.log(sum);
+    // downloadFile(jsonData[0]);
+    let data = "New File Contents";
+
+    fs.writeFile("temp.txt", data, (err) => {
+      if (err) console.log(err);
+      console.log("Successfully Written to File.");
+    });
+    
     return sum;
+}
+
+function downloadFile(book_content) {
+    const wb = XLSX.utils.book_new();
+    wb.SheetNames.push('TimeSheet');
+
+    const ws = XLSX.utils.json_to_sheet(book_content);
+    wb.Sheets['TimeSheet'] = ws;
+
+    const wbout = XLSX.writeFile(wb, 'test.xlsx');
+    return wbout;
 }
