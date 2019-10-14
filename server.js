@@ -1,11 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const request = require('request');
-const XLSX = require('xlsx');
-const FileSaver = require('file-saver');
-const Blob = require('blob');
+// const XLSX = require('xlsx');
 const upload = require('./upload');
+const download = require('./download');
 // const fs = require('fs');
 
 const app = express();
@@ -48,15 +46,14 @@ app.use(cors());
 // res.send('It is working');
 //cors(corsOptions), 
 app.get('/', (req, res) => {
-    // res.json(book1_content);
     // res.setHeader('Content-Type', 'application/octet-stream');
     // res.setHeader('Content-Disposition', 'attachment; filename='+ 'test.xlx');
     // const wbout = XLSX.writeFile(wb, 'test.xlsx');
-    // return wbout;
-    // XLSX.writeFile(wb, 'Book3.xlsx');
-    // res.send(book1_content);
+    // return wbout;    
     res.send('Hello, World!');
 });
+
+app.get('/download', download);
 
 app.post('/upload', upload);
 
