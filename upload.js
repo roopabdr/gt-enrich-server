@@ -22,11 +22,11 @@ module.exports = function upload(req, res) {
 
             console.log('Defining local storage');
 
-            if (typeof localStorage === "undefined" || localStorage === null) {                
+            if (typeof localStorage === "undefined" || localStorage === null) {
                 localStorage = new LocalStorage('./scratch');
             }
 
-            if(localStorage.getItem("TimeSheetDataKey") !== null) {
+            if (localStorage.getItem("TimeSheetDataKey") !== null) {
                 localStorage.removeItem("TimeSheetDataKey");
             }
             localStorage.setItem('TimeSheetDataKey', JSON.stringify(json));
@@ -41,7 +41,7 @@ module.exports = function upload(req, res) {
                 });
             }
 
-            res.json("Received Data, the sum is: " + sum + " and the cwd is : "+ process.cwd());
+            res.json("Received Data, the sum is: " + sum + " and the cwd is : " + process.cwd());
         })
         .catch(err => {
             res.status(400).json("God knows what this error is: " + err);
@@ -54,7 +54,7 @@ function sumVal(arr) {
 }
 
 function getBurnDownData(pJsonData) {
-    console.log('Calculating Burn down data');    
+    console.log('Calculating Burn down data');
     let burndown = lodash.filter(pJsonData, { 'Client Name': 'Sundt Construction', 'Assgn Name': 'Managed Services' });
     burndown = burndown.map(timekeeper => timekeeper['Base Hours']);
     // console.log(burndown);
