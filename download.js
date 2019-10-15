@@ -16,12 +16,13 @@ module.exports = function download(req, res) {
 
     console.log('Here we go.....', 2);
 
-    res.setHeader('Content-Type', 'application/octet-stream');
-    res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    
+    // res.setHeader('Content-Type', 'application/octet-stream');
+    // res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    
     // const wbout = 
     XLSX.writeFile(wb, 'test.xlsx');
     
-    res.download('/app/test.xlsx');
+    res.download('/app/test.xlsx', '/Book3.xlsx');
+    // res.end();
     // const wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
     // FileSaver.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
