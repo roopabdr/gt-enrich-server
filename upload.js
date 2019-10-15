@@ -1,11 +1,9 @@
 const csv = require("csvtojson");
 const lodash = require("lodash");
 const request = require('request');
+const LocalStorage = require('node-localstorage').LocalStorage;
 
 let jsonData = {};
-exports.jsonData = jsonData;
-var test = 'Tesing Data';
-exports.test = test;
 
 module.exports = function upload(req, res) {
     let fileData = String(req.body.csvdata);
@@ -17,9 +15,21 @@ module.exports = function upload(req, res) {
     csv()
         .fromString(fileData)
         .then((json) => {
-            // console.log('json inside', json[0]);
+            // console.log('json inside', JSON.stringify(json));
             jsonData = { ...json };
             let sum = getBurnDownData(jsonData);
+
+            console.log('Defining local storage');
+
+            if (typeof localStorage === "undefined" || localStorage === null) {                
+                localStorage = new LocalStorage('./scratch');
+            }
+
+            if(localStorage.getItem("TimeSheetDataKey") !== null) {
+                localStorage.removeItem("TimeSheetDataKey");
+            }
+            localStorage.setItem('TimeSheetDataKey', JSON.stringify(json));
+            console.log('Local storage key value set');
 
             if (jsonData != null) {
                 request.get('http://localhost:5000/download/', (err, res, body) => {
@@ -43,7 +53,7 @@ function sumVal(arr) {
 }
 
 function getBurnDownData(pJsonData) {
-    console.log('hey, there');
+    console.log('Calculating Burn down data');    
     let burndown = lodash.filter(pJsonData, { 'Client Name': 'Sundt Construction', 'Assgn Name': 'Managed Services' });
     burndown = burndown.map(timekeeper => timekeeper['Base Hours']);
     // console.log(burndown);
