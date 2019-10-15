@@ -18,9 +18,10 @@ module.exports = function download(req, res) {
 
     res.setHeader('Content-Type', 'application/octet-stream');
     res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    
-    const wbout = XLSX.writeFile(wb, 'test.xlsx');
+    // const wbout = 
+    XLSX.writeFile(wb, 'test.xlsx');
     
-    res.download(wbout);
+    res.download('/app/test.xlsx');
     // const wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
     // FileSaver.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
