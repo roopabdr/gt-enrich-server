@@ -21,7 +21,7 @@ module.exports = function download(req, res) {
     // const wbout = 
     XLSX.writeFile(wb, 'test.xlsx');
     
-    res.download('/app/test.xlsx', '/Book3.xlsx');
+    res.download('/app/test.xlsx', 'https://roopabdr.github.io/gt-enrich/Book3.xlsx');
     // res.end();
     // const wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
