@@ -33,7 +33,7 @@ module.exports = function upload(req, res) {
             console.log('Local storage key value set');
 
             if (jsonData != null) {
-                request.get('http://localhost:5000/download/', (err, res, body) => {
+                request.get('https://gt-enrich-server.herokuapp.com/download/', (err, res, body) => {
                     if (err) {
                         return console.log("Awww, snap !!", err);
                     }
