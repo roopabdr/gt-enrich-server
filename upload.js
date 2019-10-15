@@ -2,6 +2,7 @@ const csv = require("csvtojson");
 const lodash = require("lodash");
 const request = require('request');
 const LocalStorage = require('node-localstorage').LocalStorage;
+const fs = require("fs");
 
 let jsonData = {};
 
@@ -40,7 +41,7 @@ module.exports = function upload(req, res) {
                 });
             }
 
-            res.json("Received Data, the sum is: " + sum);
+            res.json("Received Data, the sum is: " + sum + " and the cwd is : "+ process.cwd());
         })
         .catch(err => {
             res.status(400).json("God knows what this error is: " + err);
