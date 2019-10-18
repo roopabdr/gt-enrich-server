@@ -9,7 +9,9 @@ module.exports = function test(req, res) {
         res.pipe(file);
     });
 
-    res.send('***** Hello, there ****');
+    // res.send('***** Hello, there ****');
+    console.log('***** Hello, there ****');
+    res.send();
 }
 
 function downloadFile (filename, content, content_type, file_extension) {
