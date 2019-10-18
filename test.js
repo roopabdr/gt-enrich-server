@@ -1,7 +1,14 @@
 const Blob = require('blob');
+const fs = require('fs');
+const request = require('request');
 
 module.exports = function test(req, res) {
-    downloadFile('TESTING', 'File download from NodeJS', 'text/plain', 'txt');
+    // downloadFile('TESTING', 'File download from NodeJS', 'text/plain', 'txt');
+    const file = fs.createWriteStream("node.png");
+    request.get("https://cdn.pixabay.com/photo/2015/04/23/17/41/node-js-736399_960_720.png", function (err, res, body) {
+        res.pipe(file);
+    });
+
     res.send('***** Hello, there ****');
 }
 
