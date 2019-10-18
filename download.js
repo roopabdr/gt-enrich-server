@@ -1,6 +1,7 @@
 const XLSX = require('xlsx');
 const FileSaver = require('file-saver');
 const Blob = require('blob');
+const fs = require('fs');
 // const LocalStorage = require('node-localstorage').LocalStorage;
 
 module.exports = function download(req, res) {
@@ -17,18 +18,20 @@ module.exports = function download(req, res) {
     console.log('Here we go.....', 2);
 
     res.setHeader('Content-Type', 'application/octet-stream');
-    res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    
+    res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.csv');
     // const wbout = 
-    XLSX.writeFile(wb, 'test.xlsx');
+    // XLSX.writeFile(wb, 'test.xlsx');
+    let stream = XLSX.stream.to_csv(ws);
+    stream.pipe(fs.createWriteStream("test.csv"));
     
-    res.download('/app/test.xlsx', 'https://roopabdr.github.io/gt-enrich/Book3.xlsx');
+    // res.download('/app/test.xlsx', 'https://roopabdr.github.io/gt-enrich/Book3.xlsx');
     // res.end();
     // const wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
     // FileSaver.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
 
     // console.log('Others', localStorage.getItem("TimeSheetDataKey"));
-    // res.send();
+    res.send();
 }
 
 const s2ab = (s) => {
