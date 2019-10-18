@@ -14,7 +14,7 @@ module.exports = function download(req, res) {
     const ws = XLSX.utils.json_to_sheet(data);
     wb.Sheets['TimeSheet'] = ws;
 
-    console.log('Here we go.....', 2);
+    console.log('Here we go.....', 2);    
 
     // res.setHeader('Content-Type', 'application/octet-stream');
     // res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    

@@ -4,6 +4,7 @@ const cors = require('cors');
 // const XLSX = require('xlsx');
 const upload = require('./upload');
 const download = require('./download');
+const test = require('./test');
 // const fs = require('fs');
 
 const app = express();
@@ -54,6 +55,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/download', download);
+
+app.get('/test', test);
 
 app.post('/upload', upload);
 
