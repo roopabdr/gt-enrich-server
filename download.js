@@ -14,10 +14,10 @@ module.exports = function download(req, res) {
     const ws = XLSX.utils.json_to_sheet(data);
     wb.Sheets['TimeSheet'] = ws;
 
-    console.log('Here we go.....', 2);    
+    console.log('Here we go.....', 2);
 
-    // res.setHeader('Content-Type', 'application/octet-stream');
-    // res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    
+    res.setHeader('Content-Type', 'application/octet-stream');
+    res.setHeader('Content-Disposition', 'attachment; filename=' + 'test.xlx');    
     // const wbout = 
     XLSX.writeFile(wb, 'test.xlsx');
     
@@ -37,5 +37,6 @@ const s2ab = (s) => {
     for(let i=0; i<s.length; i++){
         view[i] = s.charCodeAt(i) & 0xFF;
     }
+    
     return buf;
 }
