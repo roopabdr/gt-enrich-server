@@ -8,7 +8,7 @@
 # testing
 /coverage
 Book1.xlsx
-Book2.xlsx
+metadata.txt
 
 # production
 /build

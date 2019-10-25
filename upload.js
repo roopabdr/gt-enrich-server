@@ -1,8 +1,5 @@
 const csv = require("csvtojson");
 const lodash = require("lodash");
-const request = require('request');
-const LocalStorage = require('node-localstorage').LocalStorage;
-const fs = require("fs");
 
 let jsonData = {};
 
@@ -18,30 +15,11 @@ module.exports = function upload(req, res) {
         .then((json) => {
             // console.log('json inside', JSON.stringify(json));
             jsonData = { ...json };
-            let sum = getBurnDownData(jsonData);
+            metadataJson = jsonData.metadata;
+            csvdataJson = jsonData.csvdata;
+            let sum = getBurnDownData(metadataJson, csvdataJson);
 
-            console.log('Defining local storage');
-
-            if (typeof localStorage === "undefined" || localStorage === null) {
-                localStorage = new LocalStorage('./scratch');
-            }
-
-            if (localStorage.getItem("TimeSheetDataKey") !== null) {
-                localStorage.removeItem("TimeSheetDataKey");
-            }
-            localStorage.setItem('TimeSheetDataKey', JSON.stringify(json));
-            console.log('Local storage key value set');
-
-            if (jsonData != null) {
-                request.get('https://gt-enrich-server.herokuapp.com/download/', (err, res, body) => {
-                    if (err) {
-                        return console.log("Awww, snap !!", err);
-                    }
-                    console.log("Downloaded file", res.body);
-                });
-            }
-
-            res.json("Received Data, the sum is: " + sum + " and the cwd is : " + process.cwd());
+            res.json("Received Data, the sum is: " + sum);
         })
         .catch(err => {
             res.status(400).json("God knows what this error is: " + err);
@@ -53,13 +31,12 @@ function sumVal(arr) {
     return val;
 }
 
-function getBurnDownData(pJsonData) {
-    console.log('Calculating Burn down data');
-    let burndown = lodash.filter(pJsonData, { 'Client Name': 'Sundt Construction', 'Assgn Name': 'Managed Services' });
+function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
+    console.log('Calculating Burn down data', pMetadataJsonData);
+    let burndown = lodash.filter(pCsvJsonData, { 'Client Name': 'Sundt Construction', 'Assgn Name': 'Managed Services' });
     burndown = burndown.map(timekeeper => timekeeper['Base Hours']);
     // console.log(burndown);
     let sum = sumVal(burndown);
     console.log(sum);
-    // downloadFile(pJsonData[0]);
     return sum;
 }
