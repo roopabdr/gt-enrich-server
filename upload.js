@@ -94,7 +94,7 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
         burndown_enhancement = burndown_enhancement.map(timekeeper => timekeeper['ToBill_Hrs']);
         sum_enhancement = sumVal(burndown_enhancement);
 
-        console.log('Sum by each:: ', sum);
+        // console.log('Sum by each:: ', sum);
 
         clientArray.push({ 'value': jsonValue['Client Name'] });
         clientArray.push({ 'value': jsonValue['Budgeted Hours'] });
