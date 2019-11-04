@@ -73,7 +73,7 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
         // console.log(jsonValue['Client Name'], ' - ', jsonValue['Assignment Name'], ' - ', jsonValue['Support Type']);
         burndown = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name'], 'Assignment Name': jsonValue['Assignment Name'] });
         
-        // console.log('burndown', burndown);
+        console.log('burndown', burndown);
 
         // burndown_ms = burndown.filter(bd => {
         //     if(managedServices.map(timekeeper => timekeeper['Assignment Name']).includes(bd['Assignment Name'])) {
