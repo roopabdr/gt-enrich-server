@@ -119,6 +119,6 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
         , { value: 'Tickets created in ' + month + '-' + year }
     ]);
 
-    console.log('burndownData', burndownData);
+    // console.log('burndownData', burndownData);
     return burndownData;
 }
