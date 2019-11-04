@@ -71,16 +71,16 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
 
     burndownData = lodash.map(managedServices, (jsonValue, jsonKey) => {
         let clientArray = [];
-        console.log(jsonValue['Client Name'], ' - ', jsonValue['Assignment Name'], ' - ', jsonValue['Support Type']);
+        // console.log(jsonValue['Client Name'], ' - ', jsonValue['Assignment Name'], ' - ', jsonValue['Support Type']);
         burndown = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name'], 'Assignment Name': jsonValue['Assignment Name'] });
         
         console.log('burndown', burndown);
 
-        // burndown_ms = burndown.filter(bd => {
-        //     if(managedServices.map(timekeeper => timekeeper['Assignment Name']).includes(bd['Assignment Name'])) {
-        //         return bd['Assignment Name'];
-        //     }
-        // });
+        burndown_ms = burndown.filter(bd => {
+            if(managedServices.map(timekeeper => timekeeper['Assignment Name']).includes(bd['Assignment Name'])) {
+                return bd['Assignment Name'];
+            }
+        });
 
         burndown_enhancement = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name']});
         burndown_enhancement = burndown_enhancement.filter(bd => {
@@ -89,7 +89,7 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
             }
         });
 
-        burndown_ms = burndown.map(timekeeper => timekeeper['ToBill_Hrs']);
+        burndown_ms = burndown_ms.map(timekeeper => timekeeper['ToBill_Hrs']);
         sum = sumVal(burndown_ms);
 
         burndown_enhancement = burndown_enhancement.map(timekeeper => timekeeper['ToBill_Hrs']);
