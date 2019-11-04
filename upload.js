@@ -70,35 +70,35 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
 
     burndownData = lodash.map(managedServices, (jsonValue, jsonKey) => {
         let clientArray = [];
-        // console.log(jsonValue['Client Name'], ' - ', jsonValue['Assgn Name'], ' - ', jsonValue['Support Type']);
-        burndown = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name'], 'Assgn Name': jsonValue['Assgn Name'] });
+        // console.log(jsonValue['Client Name'], ' - ', jsonValue['Assignment Name'], ' - ', jsonValue['Support Type']);
+        burndown = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name'], 'Assignment Name': jsonValue['Assignment Name'] });
         
         // console.log('burndown', burndown);
 
         // burndown_ms = burndown.filter(bd => {
-        //     if(managedServices.map(timekeeper => timekeeper['Assgn Name']).includes(bd['Assgn Name'])) {
-        //         return bd['Assgn Name'];
+        //     if(managedServices.map(timekeeper => timekeeper['Assignment Name']).includes(bd['Assignment Name'])) {
+        //         return bd['Assignment Name'];
         //     }
         // });
 
         burndown_enhancement = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name']});
         burndown_enhancement = burndown_enhancement.filter(bd => {
-            if(enhancements.map(timekeeper => timekeeper['Assgn Name']).includes(bd['Assgn Name'])) {
-                return bd['Assgn Name'];
+            if(enhancements.map(timekeeper => timekeeper['Assignment Name']).includes(bd['Assignment Name'])) {
+                return bd['Assignment Name'];
             }
         });
 
-        burndown_ms = burndown.map(timekeeper => timekeeper['Base Hours']);
+        burndown_ms = burndown.map(timekeeper => timekeeper['ToBill_Hrs']);
         sum = sumVal(burndown_ms);
 
-        burndown_enhancement = burndown_enhancement.map(timekeeper => timekeeper['Base Hours']);
+        burndown_enhancement = burndown_enhancement.map(timekeeper => timekeeper['ToBill_Hrs']);
         sum_enhancement = sumVal(burndown_enhancement);
 
         // console.log('Sum by each:: ', sum);
 
         clientArray.push({ 'value': jsonValue['Client Name'] });
         clientArray.push({ 'value': jsonValue['Budgeted Hours'] });
-        // clientArray.push({'value': jsonValue['Assgn Name']});
+        // clientArray.push({'value': jsonValue['Assignment Name']});
         // clientArray.push({'value': jsonValue['Support Type']});
         clientArray.push({ 'value': sum });
         clientArray.push({ 'value': Number(jsonValue['Budgeted Hours']) - sum });
@@ -109,7 +109,7 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
         return clientArray;
     });
 
-    // burndownData.unshift([{value: 'Client Name'}, {value: 'Assgn Name'}, {value: 'Support Type'}, {value: 'Total Hours'}]);
+    // burndownData.unshift([{value: 'Client Name'}, {value: 'Assignment Name'}, {value: 'Support Type'}, {value: 'Total Hours'}]);
     burndownData.unshift([{ value: 'Client Name' }
         , { value: 'Budgeted Hours' }
         , { value: 'Utilized Support hours' }
