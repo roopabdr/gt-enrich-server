@@ -29,7 +29,7 @@ module.exports = function upload(req, res) {
         .then((json) => {
             // console.log('json inside', JSON.stringify(json));
             csvdataJson = { ...json };
-            console.log('csvdataJson', csvdataJson);
+            console.log('csvdataJson', Object.keys(csvdataJson).length);
             let finalBurndown = getBurnDownData(metadataJson, csvdataJson);
 
             // res.json("Received Data, the sum is: " + finalBurndown);
@@ -47,6 +47,7 @@ function sumVal(arr) {
 
 function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
     console.log('Calculating Burn down data');
+    console.log('pMetadataJsonData', Object.keys(pMetadataJsonData).length);
     let burndown = [];
     let burndown_ms = [];
     let burndown_enhancement = [];
@@ -70,7 +71,7 @@ function getBurnDownData(pMetadataJsonData, pCsvJsonData) {
 
     burndownData = lodash.map(managedServices, (jsonValue, jsonKey) => {
         let clientArray = [];
-        // console.log(jsonValue['Client Name'], ' - ', jsonValue['Assignment Name'], ' - ', jsonValue['Support Type']);
+        console.log(jsonValue['Client Name'], ' - ', jsonValue['Assignment Name'], ' - ', jsonValue['Support Type']);
         burndown = lodash.filter(pCsvJsonData, { 'Client Name': jsonValue['Client Name'], 'Assignment Name': jsonValue['Assignment Name'] });
         
         console.log('burndown', burndown);
