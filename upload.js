@@ -29,7 +29,7 @@ module.exports = function upload(req, res) {
         .then((json) => {
             // console.log('json inside', JSON.stringify(json));
             csvdataJson = { ...json };
-            // console.log('csvdataJson', csvdataJson);
+            console.log('csvdataJson', csvdataJson);
             let finalBurndown = getBurnDownData(metadataJson, csvdataJson);
 
             // res.json("Received Data, the sum is: " + finalBurndown);
